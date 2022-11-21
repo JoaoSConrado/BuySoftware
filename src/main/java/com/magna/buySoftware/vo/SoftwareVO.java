@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.magna.buySoftware.entity.UsuarioEntity;
 
@@ -12,12 +17,24 @@ public class SoftwareVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
+	
+	@NotBlank(message = "O Campo 'Software Desejado' não pode estar vazio!")
 	private String softwareDesejado;
+	
+	@NotNull(message = "O Campo 'Valor Software' não pode ser nulo!")
 	private Integer valorSoftware;
+	
+	@NotBlank(message = "O Campo 'desenvolvedor' não pode estar vazio!")
 	private String desenvolvedor;
+	
+	@NotNull(message = "O Campo 'dataEntrega' não pode estar vazio!")
+	@JsonFormat(pattern = "dd-MM-yyyy", shape = JsonFormat.Shape.STRING)
+	@FutureOrPresent
 	private LocalDate dataEntrega;
+	
 	private UsuarioEntity usuarioEntity;
-	private LocalDateTime dataCriacao;
+	
+	private LocalDateTime dataPedido;
 
 	public Long getId() {
 		return id;
@@ -68,12 +85,12 @@ public class SoftwareVO implements Serializable {
 		this.usuarioEntity = usuarioEntity;
 	}
 
-	public LocalDateTime getDataCriacao() {
-		return dataCriacao;
+	public LocalDateTime getDataPedido() {
+		return dataPedido;
 	}
 
-	public void setDataCriacao(LocalDateTime dataCriacao) {
-		this.dataCriacao = dataCriacao;
+	public void setDataPedido(LocalDateTime dataPedido) {
+		this.dataPedido = dataPedido;
 	}
 }
 

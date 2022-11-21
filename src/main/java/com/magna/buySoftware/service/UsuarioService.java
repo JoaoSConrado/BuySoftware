@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.magna.buySoftware.entity.UsuarioEntity;
+import com.magna.buySoftware.exception.DadosNaoEncontradosException;
+import com.magna.buySoftware.exception.JaFoiCadastradoException;
 import com.magna.buySoftware.repository.UsuarioRepository;
 import com.magna.buySoftware.vo.UsuarioVO;
 
@@ -24,7 +26,7 @@ public class UsuarioService {
 		usuarioEntity.setCpf(usuarioVO.getCpf());
 		usuarioEntity.setEmail(usuarioVO.getEmail());
 		usuarioEntity.setSenha(usuarioVO.getSenha());
-		usuarioEntity.setSoftwares(usuarioVO.getSoftwares());	
+		usuarioEntity.setSoftwares(usuarioVO.getSoftwares());
 		return usuarioEntity;
 	}
 
@@ -35,31 +37,36 @@ public class UsuarioService {
 		usuarioVO.setCpf(usuarioEntity.getCpf());
 		usuarioVO.setEmail(usuarioEntity.getEmail());
 		usuarioVO.setSenha(usuarioEntity.getSenha());
-		usuarioVO.setSoftwares(usuarioEntity.getSoftwares());	
+		usuarioVO.setSoftwares(usuarioEntity.getSoftwares());
 		return usuarioVO;
 	}
 
 	public Page<UsuarioVO> buscarTodosUsuarios(Pageable pageable) {
 		return usuarioRepository.findAll(pageable).map(this::converterUsuarioEntityParaUsuarioVO);
 	}
-	
+
 	public UsuarioVO buscarUsuarioPorId(Long id) {
-		Optional<UsuarioEntity> usuario = usuarioRepository.findById(id);
+		Optional<UsuarioEntity> usuario = Optional.of(usuarioRepository.findById(id)
+				.orElseThrow(() -> new DadosNaoEncontradosException("O Usuario não foi encontrado!")));
 		UsuarioEntity usuarioEntity = usuario.get();
 		return this.converterUsuarioEntityParaUsuarioVO(usuarioEntity);
 	}
-	
+
 	public UsuarioVO salvarUsuario(UsuarioVO usuarioVO) {
+		verificaCPF(usuarioVO);
+		verificaEmail(usuarioVO);
 		UsuarioEntity salvarUsuario = usuarioRepository.save(converterUsuarioVOParaUsuarioEntity(usuarioVO));
 		return this.converterUsuarioEntityParaUsuarioVO(salvarUsuario);
 	}
-	
+
 	public void deletarUsuario(Long id) {
+		buscarUsuarioPorId(id);
 		usuarioRepository.deleteById(id);
 	}
 
 	public UsuarioVO atualizarUsuario(Long id, UsuarioVO usuario) {
-		Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findById(id);
+		Optional<UsuarioEntity> usuarioEntity = Optional.of(usuarioRepository.findById(id)
+				.orElseThrow(() -> new DadosNaoEncontradosException("O Usuario não foi encontrado!")));
 		UsuarioEntity entity = usuarioEntity.get();
 		entity.setNome(usuario.getNome());
 		entity.setCpf(usuario.getCpf());
@@ -68,5 +75,17 @@ public class UsuarioService {
 		UsuarioEntity atualizarUsuario = usuarioRepository.save(usuarioEntity.get());
 		return converterUsuarioEntityParaUsuarioVO(atualizarUsuario);
 	}
-}
 
+	private void verificaCPF(UsuarioVO usuario) {
+		if (usuarioRepository.findByCpf(usuario.getCpf()).isPresent()) {
+			throw new JaFoiCadastradoException("Já existe um Usuario cadastrado com esse CPF!");
+		}
+	}
+
+	private void verificaEmail(UsuarioVO usuario) {
+		if (usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
+			throw new JaFoiCadastradoException("Já existe um Usuario cadastrado com esse EMAIL!");
+		}
+	}
+
+}

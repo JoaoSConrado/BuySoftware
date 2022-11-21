@@ -26,7 +26,7 @@ public class SoftwareEntity {
 	private LocalDate dataEntrega;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private UsuarioEntity usuarioEntity;
-	private LocalDateTime dataCriacao;
+	private LocalDateTime dataPedido;
 
 	public Long getId() {
 		return id;
@@ -77,12 +77,12 @@ public class SoftwareEntity {
 		this.usuarioEntity = usuarioEntity;
 	}
 
-	public LocalDateTime getDataCriacao() {
-		return dataCriacao;
+	public LocalDateTime getDataPedido() {
+		return dataPedido;
 	}
 
-	public void setDataCriacao(LocalDateTime dataCriacao) {
-		this.dataCriacao = dataCriacao;
+	public void setDataPedido(LocalDateTime dataPedido) {
+		this.dataPedido = dataPedido;
 	}
 }
 

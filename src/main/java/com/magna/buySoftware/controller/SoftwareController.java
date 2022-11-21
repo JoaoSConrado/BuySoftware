@@ -37,9 +37,9 @@ public class SoftwareController {
 		return ResponseEntity.status(HttpStatus.OK).body(softwareService.buscarSoftwarePorId(id));
 	}
 
-	@PostMapping("/{usuarioId}")
-	public ResponseEntity<SoftwareVO> salvarSoftware(@PathVariable Long usuarioId, @RequestBody SoftwareVO softwareVO) {
-		softwareService.salvarSoftware(usuarioId, softwareVO);
+	@PostMapping("/{id}")
+	public ResponseEntity<SoftwareVO> salvarSoftware(@PathVariable Long id, @RequestBody @Valid SoftwareVO softwareVO) {
+		softwareService.salvarSoftware(id, softwareVO);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	
