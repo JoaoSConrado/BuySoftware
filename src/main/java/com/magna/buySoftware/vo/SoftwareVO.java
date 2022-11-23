@@ -27,8 +27,8 @@ public class SoftwareVO implements Serializable {
 	@NotBlank(message = "O Campo 'desenvolvedor' não pode estar vazio!")
 	private String desenvolvedor;
 	
-	@NotNull(message = "O Campo 'dataEntrega' não pode estar vazio!")
-	@JsonFormat(pattern = "dd-MM-yyyy", shape = JsonFormat.Shape.STRING)
+//	@NotNull(message = "O Campo 'dataEntrega' não pode estar vazio!")
+	@JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
 	@FutureOrPresent
 	private LocalDate dataEntrega;
 	
@@ -95,6 +95,9 @@ public class SoftwareVO implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public void setDataEntrega(String string) {		
 	}
 	
 	
