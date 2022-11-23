@@ -2,12 +2,14 @@ package com.magna.buySoftware.controller;
 
 import javax.validation.Valid;
 
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,13 +24,14 @@ import com.magna.buySoftware.vo.SoftwareVO;
 
 @RestController
 @RequestMapping("/software")
+@CrossOrigin(origins = "*")
 public class SoftwareController {
 
 	@Autowired
 	private SoftwareService softwareService;
 
 	@GetMapping
-	public ResponseEntity<Page<SoftwareVO>> buscarTodosSoftwares(@PageableDefault(size = 20) Pageable pageable) {
+	public ResponseEntity<Page<SoftwareVO>> buscarTodosSoftwares(@ParameterObject @PageableDefault(size = 20) Pageable pageable) {
 		return ResponseEntity.status(HttpStatus.OK).body(softwareService.buscarTodosSoftwares(pageable));
 	}
 	

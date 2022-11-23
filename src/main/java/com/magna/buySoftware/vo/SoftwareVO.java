@@ -22,7 +22,7 @@ public class SoftwareVO implements Serializable {
 	private String softwareDesejado;
 	
 	@NotNull(message = "O Campo 'Valor Software' não pode ser nulo!")
-	private Integer valorSoftware;
+	private Double valorSoftware;
 	
 	@NotBlank(message = "O Campo 'desenvolvedor' não pode estar vazio!")
 	private String desenvolvedor;
@@ -52,11 +52,11 @@ public class SoftwareVO implements Serializable {
 		this.softwareDesejado = softwareDesejado;
 	}
 
-	public Integer getValorSoftware() {
+	public Double getValorSoftware() {
 		return valorSoftware;
 	}
 
-	public void setValorSoftware(Integer valorSoftware) {
+	public void setValorSoftware(Double valorSoftware) {
 		this.valorSoftware = valorSoftware;
 	}
 
@@ -72,8 +72,8 @@ public class SoftwareVO implements Serializable {
 		return dataEntrega;
 	}
 
-	public void setDataEntrega(LocalDate dataEntrega) {
-		this.dataEntrega = dataEntrega;
+	public void setDataEntrega(LocalDate string) {
+		this.dataEntrega = string;
 	}
 
 	@JsonIgnore
@@ -92,5 +92,12 @@ public class SoftwareVO implements Serializable {
 	public void setDataPedido(LocalDateTime dataPedido) {
 		this.dataPedido = dataPedido;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
+
 }
 

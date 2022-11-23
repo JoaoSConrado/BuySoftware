@@ -21,7 +21,7 @@ public class SoftwareEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String softwareDesejado;
-	private Integer valorSoftware;
+	private Double valorSoftware;
 	private String desenvolvedor;
 	private LocalDate dataEntrega;
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -44,11 +44,11 @@ public class SoftwareEntity {
 		this.softwareDesejado = softwareDesejado;
 	}
 
-	public Integer getValorSoftware() {
+	public Double getValorSoftware() {
 		return valorSoftware;
 	}
 
-	public void setValorSoftware(Integer valorSoftware) {
+	public void setValorSoftware(Double valorSoftware) {
 		this.valorSoftware = valorSoftware;
 	}
 
@@ -81,8 +81,8 @@ public class SoftwareEntity {
 		return dataPedido;
 	}
 
-	public void setDataPedido(LocalDateTime dataPedido) {
-		this.dataPedido = dataPedido;
+	public void setDataPedido(LocalDateTime localDateTime) {
+		this.dataPedido = localDateTime;
 	}
 }
 

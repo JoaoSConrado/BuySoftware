@@ -25,17 +25,14 @@ public class UsuarioEntity {
 	@OneToMany(mappedBy = "usuarioEntity", cascade = CascadeType.ALL)
 	private List<SoftwareEntity> softwares = new ArrayList<>();
 
-	public UsuarioEntity() {
-
-	}
-
-	public UsuarioEntity(Long id, String nome, String cpf, String email, String senha, List<SoftwareEntity> softwares) {
-		this.id = id;
+	public UsuarioEntity(String nome, String cpf, String email, String senha) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.email = email;
 		this.senha = senha;
-		this.softwares = softwares;
+	}
+
+	public UsuarioEntity() {
 	}
 
 	public Long getId() {
